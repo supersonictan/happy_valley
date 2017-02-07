@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.moon.si.happyvalley.dao.mapper.HVMapper" >
+    <resultMap id="resultMap" type="com.moon.si.happyvalley.entity.HVVideo">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="vname" property="vname" jdbcType="VARCHAR"/>
+        <result column="thunder_url" property="thunder_url" jdbcType="VARCHAR"/>
+        <result column="pic_path" property="pic_path" jdbcType="VARCHAR"/>
+        <result column="type" property="type" jdbcType="VARCHAR"/>
+        <result column="country" property="country" jdbcType="VARCHAR"/>
+        <result column="director" property="director" jdbcType="VARCHAR"/>
+        <result column="actor" property="actor" jdbcType="VARCHAR"/>
+        <result column="intro" property="intro" jdbcType="VARCHAR"/>
+        <result column="year" property="year" jdbcType="VARCHAR"/>
+        <result column="score" property="score" jdbcType="DOUBLE"/>
+        <result column="update_time" property="update_time" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+
+    <!--查询条件-->
+    <sql id="select_condition">
+        <trim prefix="where" prefixOverrides="and |or">
+            <if test="id != null and id !=0" >
+                and id=#{id, jdbcType=INTEGER}
+            </if>
+            <if test="vname != null and vname !=''" >
+                <![CDATA[  and vname like CONCAT('%',#{vname,jdbcType=VARCHAR},'%')  ]]>
+            </if>
+            <if test="thunder_url != null and thunder_url!=''" >
+                <![CDATA[  and thunder_url = #{thunder_url,jdbcType=VARCHAR} ]]>
+            </if>
+            <if test="pic_path != null and pic_path!=''" >
+                <![CDATA[  and pic_path = #{pic_path,jdbcType=VARCHAR} ]]>
+            </if>
+            <if test="type != null and type!=''" >
+                <![CDATA[  and type = #{type,jdbcType=VARCHAR} ]]>
+            </if>
+            <if test="country != null and country!=''" >
+                <![CDATA[  and country = #{country,jdbcType=VARCHAR} ]]>
+            </if>
+            <if test="director != null and director !=''" >
+                <![CDATA[  and director like CONCAT('%',#{director,jdbcType=VARCHAR},'%')  ]]>
+            </if>
+            <if test="actor != null and actor !=''" >
+                <![CDATA[  and actor like CONCAT('%',#{actor,jdbcType=VARCHAR},'%')  ]]>
+            </if>
+            <if test="intro != null and intro !=''" >
+                <![CDATA[  and intro like CONCAT('%',#{intro,jdbcType=VARCHAR},'%')  ]]>
+            </if>
+            <if test="year != null and year!=''" >
+                <![CDATA[  and year = #{year,jdbcType=VARCHAR} ]]>
+            </if>
+            <if test="score != null and score != 0" >
+                <![CDATA[  and score = #{score,jdbcType=DOUBLE} ]]>
+            </if>
+            <if test="update_time != null and update_time!=''" >
+                <![CDATA[  and update_time = #{score,jdbcType=TIMESTAMP} ]]>
+            </if>
+        </trim>
+    </sql>
+    <!-- 分页语句 -->
+    <sql id="page_sql">
+        <if test="pageSize!=null and offset!=null">
+            <![CDATA[ limit #{pageSize} offset #{offset} ]]>
+        </if>
+    </sql>
+    <!--from DB语句-->
+    <sql id="db_sql">
+        t_hv_video
+    </sql>
+
+
+    <!--查询记录总数-->
+    <select id="findCount" resultType="int" parameterType="HappyValleyMapper">
+        SELECT count(1) FROM <include refid="db_sql"/> <include refid="select_condition"/>
+    </select>
+    <!-- 查询列表 -->
+    <select id="findList" resultMap="resultMap" parameterType="HappyValleyMapper" >
+        select * from <include refid="db_sql"/> <include refid="select_condition"/> order by update_time desc <include refid="page_sql"/>
+    </select>
+    <!-- 更新 -->
+    <update id="update" parameterType="HappyValleyMapper">
+      UPDATE <include refid="db_sql"/>
+      <set>
+          <if test="vname != null">
+              vname = #{vname,jdbcType=VARCHAR},
+          </if>
+          <if test="thunder_url != null">
+              thunder_url = #{thunder_url,jdbcType=VARCHAR},
+          </if>
+          <if test="pic_path != null">
+              pic_path = #{pic_path,jdbcType=VARCHAR},
+          </if>
+          <if test="type != null">
+              type = #{type,jdbcType=VARCHAR},
+          </if>
+          <if test="country != null">
+              country = #{country,jdbcType=VARCHAR},
+          </if>
+          <if test="director != null">
+              director = #{director,jdbcType=VARCHAR},
+          </if>
+          <if test="actor != null">
+              actor = #{actor,jdbcType=VARCHAR},
+          </if>
+          <if test="intro != null">
+              intro = #{intro,jdbcType=VARCHAR},
+          </if>
+          <if test="year != null">
+              year = #{year,jdbcType=VARCHAR},
+          </if>
+          <if test="score != null">
+              score = #{score,jdbcType=DOUBLE},
+          </if>
+      </set>
+        WHERE id=#{id,jdbcType=INTEGER}
+    </update>
+    <!--Insert-->
+    <insert id="insert" parameterType="HappyValleyMapper" >
+        insert into <include refid="db_sql"/>
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="vname != null and vname != ''" >
+                vname,
+            </if>
+            <if test="thunder_url != null and thunder_url != ''" >
+                thunder_url,
+            </if>
+            <if test="pic_path != null and pic_path != ''" >
+                pic_path,
+            </if>
+            <if test="type != null and type != ''" >
+                type,
+            </if>
+            <if test="country != null and country != ''" >
+                country,
+            </if>
+            <if test="director != null and director != ''" >
+                director,
+            </if>
+            <if test="actor != null and actor != ''" >
+                actor,
+            </if>
+            <if test="intro != null and intro != ''" >
+                intro,
+            </if>
+            <if test="year != null and year != ''" >
+                year,
+            </if>
+            <if test="score != null and score != ''" >
+                score,
+            </if>
+            <if test="update_time != null and update_time != ''" >
+                update_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="vname != null" >
+                #{vname,jdbcType=VARCHAR},
+            </if>
+            <if test="thunder_url != null" >
+                #{thunder_url,jdbcType=VARCHAR},
+            </if>
+            <if test="pic_path != null" >
+                #{pic_path, jdbcType=VARCHAR},
+            </if>
+            <if test="type != null" >
+                #{type,jdbcType=VARCHAR},
+            </if>
+            <if test="country != null" >
+                #{country,jdbcType=VARCHAR},
+            </if>
+            <if test="director != null" >
+                #{director, jdbcType=VARCHAR},
+            </if>
+            <if test="actor != null" >
+                #{actor,jdbcType=VARCHAR},
+            </if>
+            <if test="intro != null" >
+                #{intro,jdbcType=VARCHAR},
+            </if>
+            <if test="year != null" >
+                #{year, jdbcType=VARCHAR},
+            </if>
+            <if test="score != null" >
+                #{score,jdbcType=DOUBLE},
+            </if>
+            <if test="update_time != null" >
+                #{update_time,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+
+    <!--批量删除-->
+    <delete id="deleteByIds" parameterType="java.util.List" >
+        delete from <include refid="db_sql"/> where id in
+        <foreach collection="list" item = "deptId" open="(" separator="," close=")">
+            #{deptId}
+        </foreach>
+    </delete>
+
+</mapper>

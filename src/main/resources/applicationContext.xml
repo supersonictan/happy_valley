@@ -8,7 +8,7 @@
     <!--加载 db.properties 文件-->
     <context:property-placeholder location="classpath:db.properties" />
 
-    <!--配置 SqlSessionFactoryBean 需要的 dataSources 属性-->
+    <!--配置 SqlSessionFactoryBean需要的 dataSources 属性-->
     <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
         <property name="driverClassName" value="${jdbc.driver}" />
         <property name="url" value="${jdbc.url}" />
@@ -26,7 +26,7 @@
 
     <!--让mybatis 自动扫描mapper。和属性注入-->
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-        <property name="basePackage" value="com.moon.si.happyvalley.dao"/>
+        <property name="basePackage" value="com.moon.si.happyvalley.dao.mapper"/>
         <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
     </bean>
 

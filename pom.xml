@@ -36,7 +36,8 @@
       <version>${spring.version}</version>
     </dependency>
     <dependency>
-      <groupId>org.springframework</groupId><artifactId>spring-context-support</artifactId>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-context-support</artifactId>
       <version>${spring.version}</version>
     </dependency>
     <dependency>
@@ -76,17 +77,19 @@
       <version>3.1.0</version>
       <scope>provided</scope><!--tomcat 有-->
     </dependency>
-    <!--mybatis 包-->
+    <!--mybatis包-->
     <dependency>
       <groupId>org.mybatis</groupId>
-      <artifactId>mybatis</artifactId><version>3.2.7</version>
+      <artifactId>mybatis</artifactId>
+      <version>3.2.7</version>
     </dependency>
-    <!--mabatis 和 spring 整合包-->
+    <!--mabatis和spring整合包-->
     <dependency>
       <groupId>org.mybatis</groupId>
       <artifactId>mybatis-spring</artifactId>
       <version>1.2.2</version>
     </dependency>
+
     <!--数据库连接-->
     <dependency>
       <groupId>mysql</groupId>
@@ -103,6 +106,7 @@
       <artifactId>commons-pool</artifactId>
       <version>1.5.4</version>
     </dependency>
+
     <!-- logging begin -->
     <dependency>
       <groupId>log4j</groupId>
@@ -120,8 +124,21 @@
       <version>${slf4j.version}</version>
     </dependency>
     <!-- logging end -->
+
     <dependency>
-      <groupId>junit</groupId><artifactId>junit</artifactId>
+      <groupId>javax.servlet</groupId>
+      <artifactId>jstl</artifactId>
+      <version>1.2</version>
+    </dependency>
+    <dependency>
+      <groupId>taglibs</groupId>
+      <artifactId>standard</artifactId>
+      <version>1.1.2</version>
+    </dependency>
+
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
       <version>4.11</version>
     </dependency>
   </dependencies>
