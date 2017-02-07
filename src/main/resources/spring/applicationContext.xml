@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans-3.1.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <!--加载 db.properties 文件-->
+    <context:property-placeholder location="classpath:db.properties" />
+
+    <!--配置 SqlSessionFactoryBean 需要的 dataSources 属性-->
+    <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+        <property name="driverClassName" value="${jdbc.driver}" />
+        <property name="url" value="${jdbc.url}" />
+        <property name="username" value="${jdbc.username}" />
+        <property name="password" value="${jdbc.password}" />
+        <property name="maxActive" value="10" />
+        <property name="maxIdle" value="5" />
+    </bean>
+
+    <!--加载 mybatis 配置文件。和属性注入-->
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="configLocation" value="mybatis/SqlMapConfig.xml"/>
+        <property name="dataSource" ref="dataSource" /><!--数据源-->
+    </bean>
+
+    <!--让mybatis 自动扫描mapper。和属性注入-->
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage" value="com.moon.si.happyvalley.dao"/>
+        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
+    </bean>
+
+
+
+
+    <!--根据mapper接口生成代理对象
+    将mapper.java和mapper.xml文件名一致&&在同目录中
+	自动扫描出来的mapper的bean的id为mapper类名（首字母小写）-->
+
+</beans>
